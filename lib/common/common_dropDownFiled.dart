@@ -17,7 +17,7 @@ class LabeledDropdown extends StatelessWidget {
     this.initialValue,
     this.labelStyle,
     this.dropdownTextStyle,
-    this.spaceBetweenLabelAndDropdown = 5.0,
+    this.spaceBetweenLabelAndDropdown = 8.0,
   }) : super(key: key);
 
   @override
