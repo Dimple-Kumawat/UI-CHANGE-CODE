@@ -4,6 +4,7 @@ import 'package:evolvu/Remark/remark_notePage.dart';
 import 'package:evolvu/login.dart';
 import 'package:evolvu/Student/student_profile_page.dart';
 import 'package:evolvu/Teacher/teacher_notePage.dart';
+import 'package:evolvu/result/result.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:evolvu/Student/student_card.dart';
@@ -442,6 +443,20 @@ class _StudentActivityPageState extends State<StudentActivityPage> {
         },
 
       ),
+        CardItem(
+        imagePath: 'assets/notice.png',
+        title: 'Result',
+         
+       onTap: (context) {
+          Navigator.push(
+              context,
+          MaterialPageRoute(
+            builder: (context) => ResultPage(),
+          ),
+          );
+        },
+      ),
+
 
       CardItem(
         imagePath: 'assets/smartchat.png',

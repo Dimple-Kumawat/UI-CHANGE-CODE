@@ -3,55 +3,54 @@ import 'package:flutter/material.dart';
 class LabeledDropdown extends StatelessWidget {
   final String label;
   final List<String> options;
-  final String? initialValue;
+  final String? selectedValue;
   final Function(String?) onChanged;
-  final TextStyle? labelStyle;
-  final TextStyle? dropdownTextStyle;
-  final double spaceBetweenLabelAndDropdown;
+  final double spacing;
 
   const LabeledDropdown({
     Key? key,
     required this.label,
     required this.options,
     required this.onChanged,
-    this.initialValue,
-    this.labelStyle,
-    this.dropdownTextStyle,
-    this.spaceBetweenLabelAndDropdown = 8.0,
+    this.spacing = 0.0, // Set spacing to minimal
+    this.selectedValue,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center, // Ensure vertical alignment
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Text(
           label,
-          style: labelStyle ?? Theme.of(context).textTheme.bodyText1,
-        ),
-        SizedBox(height: spaceBetweenLabelAndDropdown),
-        DropdownButtonFormField<String>(
-          value: initialValue,
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15.0), // Rounded corners
-              borderSide: BorderSide(color: Colors.grey.shade400, width: 1),
-            ),
-            filled: true,
-            fillColor: Colors.white,
+          style: const TextStyle(
+            fontSize: 16.0,
+            color: Colors.black,
           ),
-          dropdownColor: Colors.white, // Background color of dropdown items
-          style: dropdownTextStyle ?? Theme.of(context).textTheme.bodyText2,
-          items: options.map((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-          onChanged: onChanged,
-          icon: Icon(Icons.arrow_drop_down, color: Colors.grey.shade700), // Dropdown icon
-          isExpanded: true, // Makes the dropdown take up the full width
+        ),
+        SizedBox(width: spacing), // Minimal spacing between label and dropdown
+        DropdownButtonHideUnderline(
+          child: DropdownButton<String>(
+            value: selectedValue,
+            icon: Icon(
+              Icons.arrow_drop_down, // Dropdown arrow icon
+              color: Colors.grey.shade700,
+              size: 18.0, // Control the size of the dropdown arrow
+            ),
+            isDense: true, // Reduce the height and padding
+            isExpanded: false, // Prevent the dropdown from taking too much space
+            items: options.map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Align(
+                  alignment: Alignment.centerLeft, // Align text to the left
+                  child: Text(value),
+                ),
+              );
+            }).toList(),
+            onChanged: onChanged,
+          ),
         ),
       ],
     );

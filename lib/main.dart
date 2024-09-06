@@ -1,4 +1,5 @@
 import 'package:evolvu/login.dart';
+import 'package:evolvu/result/result.dart';
 import 'package:evolvu/username_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,8 @@ class MyApp extends StatelessWidget {
                   end: Alignment.bottomCenter,
                 ),
               ),
-              child: UserNamePage(),
+           // child:  ResultPage(),
+            child: UserNamePage(),
             ),
           ),
         );

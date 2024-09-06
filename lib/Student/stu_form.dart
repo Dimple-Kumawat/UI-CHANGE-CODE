@@ -761,7 +761,7 @@ class _StudentFormState extends State<StudentForm> {
                                 },
                               ),
                               SizedBox(
-                                height: 5,
+                                height: 7,
                               ),
 
                               LabeledDropdown(
@@ -777,8 +777,12 @@ class _StudentFormState extends State<StudentForm> {
                                         (house) =>
                                             house['house_name'] ==
                                             newValue)['house_id'];
-                                  });
+                                  }
+                                  
+                                  );
+                                  
                                 },
+                                
                               ),
 
                               // Display the full house name
@@ -831,7 +835,7 @@ class _StudentFormState extends State<StudentForm> {
                                 label:
                                     "Blood Group : ${getTrans(childInfo?.bloodGroup)}",
                                 options: [
-                                  "Select Blood Group",
+                                 
                                   "AB+",
                                   "AB-",
                                   "B+",
@@ -1029,6 +1033,7 @@ class _StudentFormState extends State<StudentForm> {
                                 height: 7,
                               ),
                               //////////////
+                         
                               LabeledDropdown(
                                 label: "Transport Mode :  $selectedTrans",
                                 options: displayOptions,
@@ -1040,7 +1045,8 @@ class _StudentFormState extends State<StudentForm> {
                                       childInfo?.transportMode =
                                           valueMapping[newValue]!;
                                     }
-                                  });
+                                  }
+                                  );
                                 },
                               ),
 
