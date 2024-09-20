@@ -9,36 +9,80 @@ class ResultPage extends StatefulWidget {
 }
 
 class _ResultPageState extends State<ResultPage> {
-  final List<String> testTypes = ['Periodic Test 1', 'Midterm'];
-  final List<String> termOptions = ['Term 1', 'Term 2'];
-
-  String? selectedTestTypeForFirstDropdown; // Initial state set to null
-  String? selectedTermForSecondDropdown; // Initial state set to null
-
-  // Mock result data for each test and term
-  final Map<String, Map<String, List<Map<String, dynamic>>>> resultData = {
-    'Periodic Test 1': {
-      'Term 1': [
-        {'subject': 'English', 'type': 'Periodic Test', 'score': '24/40'},
-        {'subject': 'Hindi', 'type': 'Portfolio', 'score': '5/5'},
-        {'subject': 'Hindi', 'type': 'Subject Enrichment', 'score': '2/5'},
-        {'subject': 'Hindi', 'type': 'Term', 'score': '76/80'},
-      ],
-      'Term 2': [
-        {'subject': 'Math', 'type': 'Periodic Test', 'score': '30/40'},
-      ],
+  // Sample static data to populate the design for the expandable list
+  List<Map<String, dynamic>> examData = [
+    {
+      'Exam_name': 'Midterm Exam',
+      'Details': [
+        {
+          'Subject': 'English',
+          'Mark_headings':
+              'Periodic Test will be conducted in March ',
+          'Marks_obtained': '25',
+          'Highest_marks': '30'
+        },
+        {
+          'Subject': 'Hindi',
+          'Mark_headings': 'Term Exam',
+          'Marks_obtained': '55',
+          'Highest_marks': '60'
+        },
+        {
+          'Subject': 'Math',
+          'Mark_headings': 'Periodic Test is on this date',
+          'Marks_obtained': '30',
+          'Highest_marks': '40'
+        },
+        {
+          'Subject': 'Science',
+          'Mark_headings': 'Term Exam',
+          'Marks_obtained': '50',
+          'Highest_marks': '60'
+        },
+        {
+          'Subject': 'Physics',
+          'Mark_headings': 'Term Exam',
+          'Marks_obtained': '50',
+          'Highest_marks': '60'
+        }
+      ]
     },
-    'Midterm': {
-      'Term 1': [
-        {'subject': 'Hindi', 'type': 'Portfolio', 'score': '5/5'},
-        {'subject': 'Hindi', 'type': 'Subject Enrichment', 'score': '2/5'},
-        {'subject': 'Hindi', 'type': 'Term', 'score': '76/80'},
-      ],
-      'Term 2': [
-        {'subject': 'Science', 'type': 'Midterm Exam', 'score': '50/60'},
-      ],
-    },
-  };
+    {
+      'Exam_name': 'Final Exam',
+      'Details': [
+        {
+          'Subject': 'English',
+          'Mark_headings': 'Periodic Test',
+          'Marks_obtained': '25',
+          'Highest_marks': '30'
+        },
+        {
+          'Subject': 'Hindi',
+          'Mark_headings': 'Term Exam',
+          'Marks_obtained': '55',
+          'Highest_marks': '60'
+        },
+        {
+          'Subject': 'Math',
+          'Mark_headings': 'Periodic Test',
+          'Marks_obtained': '30',
+          'Highest_marks': '40'
+        },
+        {
+          'Subject': 'Science',
+          'Mark_headings': 'Term Exam',
+          'Marks_obtained': '50',
+          'Highest_marks': '60'
+        },
+        {
+          'Subject': 'Physics',
+          'Mark_headings': 'Term Exam',
+          'Marks_obtained': '50',
+          'Highest_marks': '60'
+        }
+      ]
+    }
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +90,7 @@ class _ResultPageState extends State<ResultPage> {
       backgroundColor: Colors.transparent,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        toolbarHeight: 80.h,
+        toolbarHeight: 50.h,
         title: Text(
           "Result",
           style: TextStyle(fontSize: 20.sp, color: Colors.white),
@@ -64,37 +108,54 @@ class _ResultPageState extends State<ResultPage> {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(14.0),
           child: Column(
             children: [
-              const SizedBox(height: 110),
-              // First Dropdown for Test Type
-              _buildDropdown('Select Test Type', selectedTestTypeForFirstDropdown, testTypes, (value) {
-                setState(() {
-                  selectedTestTypeForFirstDropdown = value;
-                  // Reset second dropdown when the first dropdown changes
-                  selectedTermForSecondDropdown = null;
-                });
-              }),
-              const SizedBox(height: 10),
-              // Display results dynamically for the first dropdown (Test Type)
-              if (selectedTestTypeForFirstDropdown != null) 
-                _buildResultsForFirstDropdown(selectedTestTypeForFirstDropdown!),
-              
-              const SizedBox(height: 20),
-              
-              // Second Dropdown for Term Options (Enabled only if Test Type is selected)
-              _buildDropdown('Select Term', selectedTermForSecondDropdown, selectedTestTypeForFirstDropdown != null ? termOptions : [], (value) {
-                setState(() {
-                  selectedTermForSecondDropdown = value;
-                });
-              }),
-              
-              const SizedBox(height: 10),
-              
-              // Display results dynamically for the second dropdown (Term)
-              if (selectedTestTypeForFirstDropdown != null && selectedTermForSecondDropdown != null) 
-                _buildResultsForSecondDropdown(selectedTestTypeForFirstDropdown!, selectedTermForSecondDropdown!),
+              // Grid of cards at the top
+              Expanded(
+                flex: 2, // Adjusts the space allocated for the grid
+                child: GridView.count(
+                  crossAxisCount: 3, // Display 3 cards in each row
+                  crossAxisSpacing: 7.w, // Space between columns
+                  mainAxisSpacing: 7.h, // Space between rows
+                  children: [
+                    _buildCard(
+                        'CBSE Report Card', Icons.school, Colors.deepPurple,
+                        () {
+                      // Handle CBSE Report Card tap
+                    }),
+                    _buildCard('View Report Card', Icons.insert_drive_file,
+                        Colors.teal, () {
+                      // Handle View Report Card tap
+                    }),
+                    _buildCard('Result Chart', Icons.bar_chart, Colors.orange,
+                        () {
+                      // Handle Result Chart tap
+                    }),
+                  ],
+                ),
+              ),
+
+              // Add some spacing and divider
+              Divider(thickness: 2),
+              const SizedBox(height: 7),
+
+              // Expanded list of exam results below the cards
+              Expanded(
+                flex: 6, // Adjusts the space allocated for the exam results list
+                child: ListView.builder(
+                  padding: EdgeInsets.all(6),
+                  itemCount: examData.length,
+                  itemBuilder: (context, index) {
+                    final exam = examData[index];
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: _buildExpandableCard(
+                          exam['Exam_name'], exam['Details']),
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),
@@ -102,95 +163,123 @@ class _ResultPageState extends State<ResultPage> {
     );
   }
 
-  // Dropdown Builder
-  Widget _buildDropdown(String label, String? selectedValue, List<String> options, Function(String?) onChanged) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade400, width: 1),
-      ),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          hint: Text(label), // Show label when no selection is made
-          value: selectedValue,
-          icon: const Icon(Icons.arrow_drop_down, color: Colors.grey),
-          iconSize: 24,
-          isExpanded: true,
-          style: TextStyle(fontSize: 16.sp, color: Colors.black),
-          items: options.isNotEmpty
-              ? options.map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList()
-              : [], // No items when no test type is selected
-          onChanged: onChanged,
+  // Card Builder Function for the top grid
+  Widget _buildCard(
+      String title, IconData icon, Color color, VoidCallback onTap) {
+    return FractionallySizedBox(
+      widthFactor: 1, // Full width of the grid item
+      heightFactor: 0.80, // Reduce the height of the card
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white, // Card background color
+            borderRadius: BorderRadius.circular(16), // Rounded corners
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1), // Shadow color
+                blurRadius: 10,
+                offset: Offset(0, 4), // Shadow position
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Icon
+              Icon(icon, size: 45.sp, color: color),
+              const SizedBox(height: 6),
+              // Title
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 119, 105, 105),
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  // Build Results Based on Selection for First Dropdown
-  Widget _buildResultsForFirstDropdown(String selectedTestType) {
-    final results = resultData[selectedTestType]?['Term 1'] ?? [];
-
-    if (results.isEmpty) {
-      return const Center(
-        child: Text("No results available"),
-      );
-    }
-
-    return Column(
-      children: results.map((result) {
-        return _buildResultCard(result['subject'], result['type'], result['score']);
-      }).toList(),
-    );
-  }
-
-  // Build Results Based on Selection for Second Dropdown
-  Widget _buildResultsForSecondDropdown(String selectedTestType, String selectedTerm) {
-    final results = resultData[selectedTestType]?[selectedTerm] ?? [];
-
-    if (results.isEmpty) {
-      return const Center(
-        child: Text("No results available"),
-      );
-    }
-
-    return Column(
-      children: results.map((result) {
-        return _buildResultCard(result['subject'], result['type'], result['score']);
-      }).toList(),
-    );
-  }
-
-  // Result Card
-  Widget _buildResultCard(String subject, String type, String score) {
+  // Function to build an expandable card dynamically for exam results
+  Widget _buildExpandableCard(String title, List<dynamic> details) {
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 6),
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      elevation: 4,
+      child: ExpansionTile(
+        title: Row(
           children: [
-            Text(
-              subject,
-              style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+            Expanded(
+              child: Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
             ),
-            Text(
-              type,
-              style: TextStyle(fontSize: 16.sp),
-            ),
-            Text(
-              score,
-              style: TextStyle(fontSize: 16.sp, color: Colors.blue),
-            ),
+            if (title == 'Final Exam') // Show certificate icon only for 'Final Exam'
+              Icon(Icons.emoji_events,
+                  color: Color.fromARGB(255, 197, 185, 75),
+                  size: 25), // Certificate icon
           ],
         ),
+        children: details.map((detail) {
+          return _buildResultRow(
+            detail['Subject'],
+            detail['Mark_headings'],
+            '${detail['Marks_obtained']}/${detail['Highest_marks']}',
+          );
+        }).toList(),
       ),
     );
   }
+
+  // Function to build each result row dynamically for the expandable exam cards
+ // Function to build each result row dynamically for the expandable exam cards
+Widget _buildResultRow(String subject, String test, String score) {
+  return Padding(
+    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 14),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        // Subject Column with fixed width
+        SizedBox(
+          width: 80.w, // Fixed width for subject text
+          child: Text(
+            subject,
+            style: TextStyle(color: Color.fromARGB(255, 34, 28, 28)),
+            textAlign: TextAlign.left, // Align text to the left
+            overflow: TextOverflow.ellipsis, // Handle long text
+          ),
+        ),
+        
+        // Mark Headings Column with expanded width
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Text(
+              test,
+              style: TextStyle(fontWeight: FontWeight.w600),
+              maxLines: 2, // Limit to 2 lines
+              overflow: TextOverflow.ellipsis, // Show '...' if the text exceeds
+              softWrap: true, // Allow wrapping
+              textAlign: TextAlign.center, // Align heading to the center
+            ),
+          ),
+        ),
+        
+        // Marks Column with fixed width
+        SizedBox(
+          width: 50.w, // Fixed width for score text
+          child: Text(
+            score,
+            style: TextStyle(color: Colors.blue),
+            textAlign: TextAlign.right, // Align text to the right
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+
 }

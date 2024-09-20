@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
-class CustomTextField extends StatelessWidget {
+class  StuTextField extends StatelessWidget {
   final String label;
   final String name;
   final bool readOnly;
   final String? initialValue;
   final ValueChanged<String>? onChanged;
 
-  const CustomTextField({
+  const  StuTextField({
     Key? key,
     required this.name,
     this.initialValue,
@@ -36,7 +36,7 @@ class CustomTextField extends StatelessWidget {
             name: name,
             readOnly: readOnly,
             initialValue: initialValue,
-          //  onChanged: onChanged,
+         //   onChanged: onChanged,
             decoration: InputDecoration(
               hintText: '', // No label inside the border
               contentPadding: const EdgeInsets.symmetric(

@@ -451,7 +451,8 @@ class _StudentActivityPageState extends State<StudentActivityPage> {
           Navigator.push(
               context,
           MaterialPageRoute(
-            builder: (context) => ResultPage(),
+           builder: (context) => ResultPage(),
+          //   builder: (context) => ExamResult(),
           ),
           );
         },
