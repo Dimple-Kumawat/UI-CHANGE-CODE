@@ -7,6 +7,7 @@ class CustomTextField extends StatelessWidget {
   final bool readOnly;
   final String? initialValue;
   final ValueChanged<String>? onChanged;
+  final bool isRequired;
 
   const CustomTextField({
     Key? key,
@@ -15,80 +16,78 @@ class CustomTextField extends StatelessWidget {
     this.readOnly = false,
     this.onChanged,
     required this.label,
+    this.isRequired = true, // Add this to show the asterisk conditionally
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 1.0), // Reduced padding
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start ,
+      padding: const EdgeInsets.symmetric(vertical: 8.0), // Adjust padding
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: label, // Label text in black
-                        style: const TextStyle(
-                          color: Colors.black, // Label in black
-                          fontSize: 12.0, // Smaller label size
-                          fontWeight: FontWeight.w600,
-                        ),
+          // Label with a red asterisk if the field is required
+          SizedBox(
+            width: 100, // Adjust the width to align labels and fields properly
+            child: RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: label,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14.0,
+                      color: Colors.black,
+                    ),
+                  ),
+                  if (isRequired) // Only show the asterisk if the field is required
+                    const TextSpan(
+                      text: ' *',
+                      style: TextStyle(
+                        color: Colors.red, // Red asterisk for required fields
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.bold,
                       ),
-                      const TextSpan(
-                        text: ' *', // Asterisk in red
-                        style: TextStyle(
-                          color: Colors.red, // Red asterisk
-                          fontSize: 10.0, // Smaller asterisk size
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
+                    ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(width: 20), // Space between label and field
+          // Form Field
+          Expanded(
+            child: FormBuilderTextField(
+              name: name,
+              readOnly: readOnly,
+              initialValue: initialValue,
+              decoration: InputDecoration(
+                contentPadding: const EdgeInsets.symmetric(
+                  vertical: 12.0,
+                  horizontal: 10.0,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6.0),
+                  borderSide: BorderSide(
+                    color: Colors.grey.shade400,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6.0),
+                  borderSide: BorderSide(
+                    color: Colors.grey.shade400,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6.0),
+                  borderSide: const BorderSide(
+                    color: Colors.blue,
+                    width: 1.5,
                   ),
                 ),
               ),
-            ],
-          ),
-          const SizedBox(
-              height: 1.0), // Less space between label and text field
-          FormBuilderTextField(
-            name: name,
-            readOnly: readOnly,
-            initialValue: initialValue,
-            decoration: InputDecoration(
-              hintText: '', // No label inside the border
-              contentPadding: const EdgeInsets.symmetric(
-                vertical: 4.0, // Reduced vertical padding
-                horizontal: 6.0, // Reduced horizontal padding
+              style: const TextStyle(
+                fontSize: 14.0,
               ),
-              border: OutlineInputBorder(
-                borderRadius:
-                    BorderRadius.circular(6.0), // Smaller border radius
-                borderSide: BorderSide(
-                  color: Colors.grey.shade400, // Border color
-                ),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius:
-                    BorderRadius.circular(6.0), // Smaller enabled border
-                borderSide: BorderSide(
-                  color: Colors.grey.shade400, // Border color when enabled
-                ),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius:
-                    BorderRadius.circular(6.0), // Smaller focused border
-                borderSide: const BorderSide(
-                  color: Colors.blue, // Border color when focused
-                  width: 1.5, // Narrower border width when focused
-                ),
-              ),
-            ),
-            style: const TextStyle(
-              fontSize: 14.0, // Smaller input text size
             ),
           ),
         ],

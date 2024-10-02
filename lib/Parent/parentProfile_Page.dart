@@ -320,6 +320,7 @@ class _ParentProfilePage extends State<ParentProfilePage> {
                         });
                       },
                     ),
+                    
                     CustomTextField(
                       label: 'Mother Name',
                       name: 'Mother_Name',

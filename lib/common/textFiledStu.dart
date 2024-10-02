@@ -20,64 +20,57 @@ class StuTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 3.0),
-      child: Column(
+      padding: const EdgeInsets.symmetric(vertical: 8.0), // Adjust padding for space between fields
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: label, // Label text in black
-                        style: const TextStyle(
-                          color: Colors.black, // Label in black
-                          fontSize: 12.0,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
+          // Label
+          SizedBox(
+            width: 100, // Adjust the width to align labels and fields properly
+            child: Text(
+              label,
+              style: const TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 14.0,
+                color: Colors.black,
+              ),
+            ),
+          ),
+          const SizedBox(width: 20), // Space between label and field
+          // Form Field
+          Expanded(
+            child: FormBuilderTextField(
+              name: name,
+              readOnly: readOnly,
+              initialValue: initialValue,
+              decoration: InputDecoration(
+                contentPadding: const EdgeInsets.symmetric(
+                  vertical: 12.0,
+                  horizontal: 10.0,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0), // Rounded border
+                  borderSide: BorderSide(
+                    color: Colors.grey.shade400,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(
+                    color: Colors.grey.shade400,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: const BorderSide(
+                    color: Colors.blue,
+                    width: 2.0,
                   ),
                 ),
               ),
-            ],
-          ),
-          const SizedBox(height: 8.0), // Space between label and text field
-          FormBuilderTextField(
-            name: name,
-            readOnly: readOnly,
-            initialValue: initialValue,
-            //onChanged: onChanged, // Ensure this is passed
-            decoration: InputDecoration(
-              hintText: '', // No label inside the border
-              contentPadding: const EdgeInsets.symmetric(
-                vertical: 15.0,
-                horizontal: 20.0, // Padding inside the text field
+              style: const TextStyle(
+                fontSize: 14.0, // Input text size
               ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0), // Rounded border
-                borderSide: BorderSide(
-                  color: Colors.grey.shade400, // Border color
-                ),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0), // Rounded enabled border
-                borderSide: BorderSide(
-                  color: Colors.grey.shade400, // Border color when enabled
-                ),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0), // Rounded focused border
-                borderSide: const BorderSide(
-                  color: Colors.blue, // Border color when focused
-                  width: 2.0,
-                ),
-              ),
-            ),
-            style: const TextStyle(
-              fontSize: 14.0, // Input text size
             ),
           ),
         ],

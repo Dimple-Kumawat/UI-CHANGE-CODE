@@ -697,105 +697,56 @@ class _StudentFormState extends State<StudentForm> {
                                 height: 15,
                               ),
 
-                              Row(
-                                children: [
-                                  // First Name Field
-                                  Expanded(
-                                    child: CustomTextField(
-                                      label: 'First Name',
-                                      name: 'First Name',
-                                      readOnly: true,
-                                      initialValue: childInfo?.firstName,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                      width:
-                                          7.w), // Space between the two fields
-
-                                  // Middle Name Field
-                                  Expanded(
-                                    child: CustomTextField(
-                                      label: 'Middle Name',
-                                      name: 'Middle Name',
-                                      readOnly: true,
-                                      initialValue: childInfo?.midName,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                      width:
-                                          7.w), // Space between the two fields
-
-                                  // Last Name Field
-                                  Expanded(
-                                    child: CustomTextField(
-                                      label: 'Last Name',
-                                      name: 'Last Name',
-                                      readOnly: true,
-                                      initialValue: childInfo?.lastName,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 7,
+                              CustomTextField(
+                                label: 'First Name',
+                                name: 'First Name',
+                                readOnly: true,
+                                initialValue: childInfo?.firstName,
                               ),
 
-                              Row(
-                                children: [
-                                  // Date Of Birth Field
-                                  Expanded(
-                                    child: CustomTextField(
-                                      label: 'Date Of Birth',
-                                      name: 'Date Of Birth',
-                                      readOnly: true,
-                                      initialValue: childInfo?.dob,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                      width:
-                                          16.w), // Space between the two fields
-
-                                  // Date Of Admission Field
-                                  Expanded(
-                                    child: CustomTextField(
-                                      label: 'Date Of Admission',
-                                      name: 'Date Of Admission',
-                                      readOnly: true,
-                                      initialValue: childInfo?.admissionDate,
-                                    ),
-                                  ),
-                                ],
+                              CustomTextField(
+                                label: 'Middle Name',
+                                name: 'Middle Name',
+                                readOnly: true,
+                                initialValue: childInfo?.midName,
                               ),
-                              SizedBox(
-                                height: 7,
+
+                              CustomTextField(
+                                label: 'Last Name',
+                                name: 'Last Name',
+                                readOnly: true,
+                                initialValue: childInfo?.lastName,
+                              ),
+
+                              CustomTextField(
+                                label: 'Date Of Birth',
+                                name: 'Date Of Birth',
+                                readOnly: true,
+                                initialValue: childInfo?.dob,
+                              ),
+
+                              // Date Of Admission Field
+                              CustomTextField(
+                                label: 'Date Of Admission',
+                                name: 'Date Of Admission',
+                                readOnly: true,
+                                initialValue: childInfo?.admissionDate,
                               ),
 
                               // GRN NO. CustomTextField
-                              Row(
-                                children: [
-                                  // GRN NO. Field
-                                  Expanded(
-                                    child: CustomTextField(
-                                      label: 'GRN NO.',
-                                      name: 'GRN NO.',
-                                      readOnly: true,
-                                      initialValue: childInfo?.regNo,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                      width:
-                                          16.w), // Space between the two fields
+                              CustomTextField(
+                                label: 'GRN NO.',
+                                name: 'GRN NO.',
+                                readOnly: true,
+                                initialValue: childInfo?.regNo,
+                              ),
 
-                                  // Student ID NO. Field
-                                  Expanded(
-                                    child: CustomTextField(
-                                      label: 'Student ID NO.',
-                                      name: 'Student ID NO.',
-                                      readOnly: true,
-                                      initialValue: childInfo?.studIdNo,
-                                    ),
-                                  ),
-                                ],
+                              // Student ID NO. Field
+                              CustomTextField(
+                                label: 'Student ID NO.',
+                                name: 'Student ID NO.',
+                                readOnly: true,
+                                initialValue: childInfo?.studIdNo,
                               ),
 
 // Add some vertical space between the two fields
@@ -808,37 +759,25 @@ class _StudentFormState extends State<StudentForm> {
                               //   initialValue: childInfo?.studIdNo,
                               // ),
 
-                              Row(
-                                children: [
-                                  // Udise Pen No. Field
-                                  Expanded(
-                                    child: CustomTextField(
-                                      label: 'Udise Pen No.',
-                                      name: 'Udise Pen No.',
-                                      readOnly: true,
-                                      initialValue: childInfo?.udisePenNo,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                      width:
-                                          16.w), // Space between the two fields
+                              CustomTextField(
+                                label: 'Udise Pen No.',
+                                name: 'Udise Pen No.',
+                                readOnly: true,
+                                initialValue: childInfo?.udisePenNo,
+                              ),
+                              // Space between the two fields
 
-                                  // Student Aadhaar No. Field
-                                  Expanded(
-                                    child: StuTextField(
-                                      label: 'Student Aadhaar NO.',
-                                      name: 'Student Aadhaar NO.',
-                                      readOnly: false,
-                                      initialValue:
-                                          childInfo?.stuAadhaarNo ?? '',
-                                      onChanged: (value) {
-                                        setState(() {
-                                          childInfo?.stuAadhaarNo = value;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ],
+                              // Student Aadhaar No. Field
+                              StuTextField(
+                                label: 'Student Aadhaar NO.',
+                                name: 'Student Aadhaar NO.',
+                                readOnly: false,
+                                initialValue: childInfo?.stuAadhaarNo ?? '',
+                                onChanged: (value) {
+                                  setState(() {
+                                    childInfo?.stuAadhaarNo = value;
+                                  });
+                                },
                               ),
                               ////
                               // TextFormField(
@@ -858,100 +797,69 @@ class _StudentFormState extends State<StudentForm> {
                               // if (childInfo?.house != null)
                               //   Text('House: ${getFullHouseName(childInfo!.house)}'),
 
-                              Row(
-                                children: [
-                                  // Admitted In Class Field
-                                  Expanded(
-                                    child: CustomTextField(
-                                      label: 'Admitted In Class',
-                                      name: 'Admitted In Class',
-                                      initialValue: childInfo?.admissionClass,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                      width:
-                                          16.w), // Space between the two fields
-                                  // Class Field
-                                  Expanded(
-                                    child: CustomTextField(
-                                      initialValue: widget?.cname,
-                                      label: 'Class',
-                                      name: 'Class',
-                                      readOnly: true,
-                                    ),
-                                  ),
-                                ],
+                              CustomTextField(
+                                label: 'Admitted In Class',
+                                name: 'Admitted In Class',
+                                initialValue: childInfo?.admissionClass,
                               ),
-                              Row(
-                                children: [
-                                  // Division Field
-                                  Expanded(
-                                    child: CustomTextField(
-                                      initialValue: widget?.secname,
-                                      readOnly: true,
-                                      label: 'Division',
-                                      name: 'Division',
-                                    ),
-                                  ),
-                                  SizedBox(
-                                      width:
-                                          16.w), // Space between the two fields
-                                  // Roll No. Field
-                                  Expanded(
-                                    child: CustomTextField(
-                                      readOnly: true,
-                                      initialValue: childInfo?.rollNo,
-                                      label: 'Roll No.',
-                                      name: 'Roll No.',
-                                    ),
-                                  ),
-                                ],
+                              SizedBox(
+                                  width: 16.w), // Space between the two fields
+                              // Class Field
+                              CustomTextField(
+                                initialValue: widget?.cname,
+                                label: 'Class',
+                                name: 'Class',
+                                readOnly: true,
                               ),
-                              Row(
-                                children: [
-                                  // Gender Dropdown
-                                  Expanded(
-                                    child: LabeledDropdown(
-                                      label:
-                                          "Gender:  ${getGender(childInfo!.gender)}",
-                                      options: ['Male', 'Female'],
-                                      onChanged: (String? newValue) {
-                                        setState(() {
-                                          if (newValue != null) {
-                                            childInfo?.gender = newValue;
-                                          }
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                  SizedBox(
-                                      width: 16
-                                          .w), // Space between the two dropdowns
-                                  // Blood Group Dropdown
-                                  Expanded(
-                                    child: LabeledDropdown(
-                                      label:
-                                          "Blood Group: ${getTrans(childInfo?.bloodGroup)}",
-                                      options: const [
-                                        "AB+",
-                                        "AB-",
-                                        "B+",
-                                        "B-",
-                                        "A+",
-                                        "A-",
-                                        "O+",
-                                        "O-"
-                                      ],
-                                      onChanged: (String? newValue) {
-                                        setState(() {
-                                          if (newValue != null) {
-                                            childInfo?.bloodGroup = newValue;
-                                          }
-                                        });
-                                      },
-                                    ),
-                                  ),
+                              CustomTextField(
+                                initialValue: widget?.secname,
+                                readOnly: true,
+                                label: 'Division',
+                                name: 'Division',
+                              ),
+
+                              CustomTextField(
+                                readOnly: true,
+                                initialValue: childInfo?.rollNo,
+                                label: 'Roll No.',
+                                name: 'Roll No.',
+                              ),
+                              LabeledDropdown(
+                                label: "Gender", // Keep the label static
+                                options: ['Male', 'Female'],
+                                selectedValue: getGender(childInfo!
+                                    .gender), // Show the selected gender inside the dropdown
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    if (newValue != null) {
+                                      childInfo?.gender = newValue;
+                                    }
+                                  });
+                                },
+                              ),
+
+                              LabeledDropdown(
+                                label: "Blood Group", // Static label
+                                options: const [
+                                  "AB+",
+                                  "AB-",
+                                  "B+",
+                                  "B-",
+                                  "A+",
+                                  "A-",
+                                  "O+",
+                                  "O-"
                                 ],
+                                selectedValue: childInfo?.bloodGroup ??
+                                    '', // Display the selected blood group inside the dropdown
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    if (newValue != null) {
+                                      childInfo?.bloodGroup =
+                                          newValue; // Update the selected value
+                                    }
+                                  });
+                                },
                               ),
 
                               // TextFormField(
@@ -967,45 +875,37 @@ class _StudentFormState extends State<StudentForm> {
                               //   },
                               // ),
 
-                              Row(
-                                children: [
-                                  // LabeledDropdown for House
-                                  Expanded(
-                                    child: LabeledDropdown(
-                                      label: 'House : $selectedHouseName',
-                                      options: houseNameMapping.values.toList(),
-                                      onChanged: (String? newValue) {
-                                        setState(() {
-                                          selectedHouseName = newValue;
-                                          selectedHouseId = houses.firstWhere(
+                              LabeledDropdown(
+                                label: 'House', // Static label
+                                options: houseNameMapping.values
+                                    .toList(), // List of house names
+                                selectedValue:
+                                    selectedHouseName, // Display the selected house name inside the dropdown
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    if (newValue != null) {
+                                      selectedHouseName =
+                                          newValue; // Update the selected house name
+                                      selectedHouseId = houses.firstWhere(
                                               (house) =>
                                                   house['house_name'] ==
-                                                  newValue)['house_id'];
-                                        });
-                                      },
-                                    ),
-                                  ),
+                                                  newValue)[
+                                          'house_id']; // Update the house ID based on the selected house name
+                                    }
+                                  });
+                                },
+                              ),
 
-                                  SizedBox(
-                                      width:
-                                          16.w), // Space between the two fields
-
-                                  // StuTextField for Nationality
-                                  Expanded(
-                                    child: StuTextField(
-                                      label: 'Nationality',
-                                      name: 'Nationality',
-                                      readOnly: false,
-                                      initialValue:
-                                          childInfo?.nationality ?? '',
-                                      onChanged: (value) {
-                                        setState(() {
-                                          childInfo?.nationality = value;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ],
+                              StuTextField(
+                                label: 'Nationality',
+                                name: 'Nationality',
+                                readOnly: false,
+                                initialValue: childInfo?.nationality ?? '',
+                                onChanged: (value) {
+                                  setState(() {
+                                    childInfo?.nationality = value;
+                                  });
+                                },
                               ),
 
                               // TextFormField(
@@ -1045,42 +945,28 @@ class _StudentFormState extends State<StudentForm> {
                               //     });
                               //   },
                               // ),
-                              Row(
-                                children: [
-                                  // City TextField
-                                  Expanded(
-                                    child: StuTextField(
-                                      label: 'City',
-                                      name: 'City',
-                                      readOnly: false,
-                                      initialValue: childInfo?.city ?? '',
-                                      onChanged: (value) {
-                                        setState(() {
-                                          childInfo?.city = value;
-                                        });
-                                      },
-                                    ),
-                                  ),
+                              StuTextField(
+                                label: 'City',
+                                name: 'City',
+                                readOnly: false,
+                                initialValue: childInfo?.city ?? '',
+                                onChanged: (value) {
+                                  setState(() {
+                                    childInfo?.city = value;
+                                  });
+                                },
+                              ),
 
-                                  SizedBox(
-                                      width: 16
-                                          .w), // Responsive space between the two fields
-
-                                  // State TextField
-                                  Expanded(
-                                    child: StuTextField(
-                                      label: 'State',
-                                      name: 'State',
-                                      readOnly: false,
-                                      initialValue: childInfo?.state ?? '',
-                                      onChanged: (value) {
-                                        setState(() {
-                                          childInfo?.state = value;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ],
+                              StuTextField(
+                                label: 'State',
+                                name: 'State',
+                                readOnly: false,
+                                initialValue: childInfo?.state ?? '',
+                                onChanged: (value) {
+                                  setState(() {
+                                    childInfo?.state = value;
+                                  });
+                                },
                               ),
 
                               // TextFormField(
@@ -1095,42 +981,28 @@ class _StudentFormState extends State<StudentForm> {
                               //     });
                               //   },
                               // ),
-                              Row(
-                                children: [
-                                  // Pincode TextField
-                                  Expanded(
-                                    child: StuTextField(
-                                      label: 'Pincode',
-                                      name: 'Pincode',
-                                      readOnly: false,
-                                      initialValue: childInfo?.pincode ?? '',
-                                      onChanged: (value) {
-                                        setState(() {
-                                          childInfo?.pincode = value;
-                                        });
-                                      },
-                                    ),
-                                  ),
+                              StuTextField(
+                                label: 'Pincode',
+                                name: 'Pincode',
+                                readOnly: false,
+                                initialValue: childInfo?.pincode ?? '',
+                                onChanged: (value) {
+                                  setState(() {
+                                    childInfo?.pincode = value;
+                                  });
+                                },
+                              ),
 
-                                  SizedBox(
-                                      width: 16
-                                          .w), // Responsive space between the two fields
-
-                                  // Birth Place TextField
-                                  Expanded(
-                                    child: StuTextField(
-                                      label: 'Birth Place',
-                                      name: 'Birth Place',
-                                      readOnly: false,
-                                      initialValue: childInfo?.birthPlace ?? '',
-                                      onChanged: (value) {
-                                        setState(() {
-                                          childInfo?.birthPlace = value;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ],
+                              StuTextField(
+                                label: 'Birth Place',
+                                name: 'Birth Place',
+                                readOnly: false,
+                                initialValue: childInfo?.birthPlace ?? '',
+                                onChanged: (value) {
+                                  setState(() {
+                                    childInfo?.birthPlace = value;
+                                  });
+                                },
                               ),
 
                               // TextFormField(
@@ -1145,43 +1017,29 @@ class _StudentFormState extends State<StudentForm> {
                               //     });
                               //   },
                               // ),
-                              Row(
-                                children: [
-                                  // Mother Tongue TextField
-                                  Expanded(
-                                    child: StuTextField(
-                                      label: 'Mother Tongue',
-                                      name: 'Mother Tongue',
-                                      readOnly: false,
-                                      initialValue:
-                                          childInfo?.motherTongue ?? '',
-                                      onChanged: (value) {
-                                        setState(() {
-                                          childInfo?.motherTongue = value;
-                                        });
-                                      },
-                                    ),
-                                  ),
+                              StuTextField(
+                                label: 'Mother Tongue',
+                                name: 'Mother Tongue',
+                                readOnly: false,
+                                initialValue: childInfo?.motherTongue ?? '',
+                                onChanged: (value) {
+                                  setState(() {
+                                    childInfo?.motherTongue = value;
+                                  });
+                                },
+                              ),
 
-                                  SizedBox(
-                                      width:
-                                          16.w), // Space between the two fields
-
-                                  // Religion TextField
-                                  Expanded(
-                                    child: StuTextField(
-                                      label: 'Religion',
-                                      name: 'Religion',
-                                      readOnly: false,
-                                      initialValue: childInfo?.religion ?? '',
-                                      onChanged: (value) {
-                                        setState(() {
-                                          childInfo?.religion = value;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ],
+                              // Religion TextField
+                              StuTextField(
+                                label: 'Religion',
+                                name: 'Religion',
+                                readOnly: false,
+                                initialValue: childInfo?.religion ?? '',
+                                onChanged: (value) {
+                                  setState(() {
+                                    childInfo?.religion = value;
+                                  });
+                                },
                               ),
 
                               // TextFormField(
@@ -1197,42 +1055,29 @@ class _StudentFormState extends State<StudentForm> {
                               //     });
                               //   },
                               // ),
-                              Row(
-                                children: [
-                                  // Caste TextField
-                                  Expanded(
-                                    child: StuTextField(
-                                      label: 'Caste',
-                                      name: 'Caste',
-                                      readOnly: false,
-                                      initialValue: childInfo?.caste ?? '',
-                                      onChanged: (value) {
-                                        setState(() {
-                                          childInfo?.caste = value;
-                                        });
-                                      },
-                                    ),
-                                  ),
+                              StuTextField(
+                                label: 'Caste',
+                                name: 'Caste',
+                                readOnly: false,
+                                initialValue: childInfo?.caste ?? '',
+                                onChanged: (value) {
+                                  setState(() {
+                                    childInfo?.caste = value;
+                                  });
+                                },
+                              ),
 
-                                  SizedBox(
-                                      width:
-                                          16.w), // Space between the two fields
-
-                                  // Category TextField
-                                  Expanded(
-                                    child: StuTextField(
-                                      label: 'Category',
-                                      name: 'Category',
-                                      readOnly: false,
-                                      initialValue: childInfo?.category ?? '',
-                                      onChanged: (value) {
-                                        setState(() {
-                                          childInfo?.category = value;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ],
+                              // Category TextField
+                              StuTextField(
+                                label: 'Category',
+                                name: 'Category',
+                                readOnly: false,
+                                initialValue: childInfo?.category ?? '',
+                                onChanged: (value) {
+                                  setState(() {
+                                    childInfo?.category = value;
+                                  });
+                                },
                               ),
 
                               // TextFormField(
@@ -1294,43 +1139,28 @@ class _StudentFormState extends State<StudentForm> {
                               //     });
                               //   },
                               // ),
-                              Row(
-                                children: [
-                                  // Emergency Contact TextField
-                                  Expanded(
-                                    child: StuTextField(
-                                      label: 'Emergency Contact',
-                                      name: 'Emergency Contact',
-                                      readOnly: false,
-                                      initialValue:
-                                          childInfo?.emergencyContact ?? '',
-                                      onChanged: (value) {
-                                        setState(() {
-                                          childInfo?.emergencyContact = value;
-                                        });
-                                      },
-                                    ),
-                                  ),
+                              StuTextField(
+                                label: 'Emergency Contact',
+                                name: 'Emergency Contact',
+                                readOnly: false,
+                                initialValue: childInfo?.emergencyContact ?? '',
+                                onChanged: (value) {
+                                  setState(() {
+                                    childInfo?.emergencyContact = value;
+                                  });
+                                },
+                              ),
 
-                                  SizedBox(
-                                      width:
-                                          16.w), // Space between the two fields
-
-                                  // Allergies(If ANY) TextField
-                                  Expanded(
-                                    child: StuTextField(
-                                      label: 'Allergies(If ANY)',
-                                      name: 'Allergies(If ANY)',
-                                      readOnly: false,
-                                      initialValue: childInfo?.allergies ?? '',
-                                      onChanged: (value) {
-                                        setState(() {
-                                          childInfo?.allergies = value;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ],
+                              StuTextField(
+                                label: 'Allergies(If ANY)',
+                                name: 'Allergies(If ANY)',
+                                readOnly: false,
+                                initialValue: childInfo?.allergies ?? '',
+                                onChanged: (value) {
+                                  setState(() {
+                                    childInfo?.allergies = value;
+                                  });
+                                },
                               ),
 
                               // TextFormField(
@@ -1382,43 +1212,29 @@ class _StudentFormState extends State<StudentForm> {
                               //     });
                               //   },
                               // ),
-                              Row(
-                                children: [
-                                  // Height TextField
-                                  Expanded(
-                                    child: StuTextField(
-                                      label: 'Height',
-                                      name: 'Height',
-                                      readOnly: false,
-                                      initialValue: childInfo?.height ?? '',
-                                      onChanged: (value) {
-                                        setState(() {
-                                          childInfo?.height = value;
-                                        });
-                                      },
-                                    ),
-                                  ),
+                              StuTextField(
+                                label: 'Height',
+                                name: 'Height',
+                                readOnly: false,
+                                initialValue: childInfo?.height ?? '',
+                                onChanged: (value) {
+                                  setState(() {
+                                    childInfo?.height = value;
+                                  });
+                                },
+                              ),
 
-                                  SizedBox(
-                                      width: 16
-                                          .w), // Responsive space between the two fields
-
-                                  // Weight TextField
-                                  Expanded(
-                                    child: StuTextField(
-                                      label: 'Weight',
-                                      name: 'Weight',
-                                      readOnly: false,
-                                      initialValue: childInfo?.weight ?? '',
-                                      onChanged: (value) {
-                                        setState(() {
-                                          childInfo?.weight =
-                                              value; // Corrected this line, it was updating 'nationality' instead of 'weight'
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ],
+                              StuTextField(
+                                label: 'Weight',
+                                name: 'Weight',
+                                readOnly: false,
+                                initialValue: childInfo?.weight ?? '',
+                                onChanged: (value) {
+                                  setState(() {
+                                    childInfo?.weight =
+                                        value; // Corrected this line, it was updating 'nationality' instead of 'weight'
+                                  });
+                                },
                               ),
 
                               // TextFormField(
@@ -1434,53 +1250,39 @@ class _StudentFormState extends State<StudentForm> {
                               //     });
                               //   },
                               // ),
-                              SizedBox(
-                                height: 5.h,
-                              ),
-                              Row(
-                                children: [
-                                  // Transport Mode Dropdown
-                                  Expanded(
-                                    child: LabeledDropdown(
-                                      label: "Transport Mode :  $selectedTrans",
-                                      options: displayOptions,
-                                      onChanged: (String? newValue) {
-                                        setState(() {
-                                          if (newValue != null) {
-                                            // Update the transportMode with the server-side value
-                                            selectedTrans = newValue;
-                                            childInfo?.transportMode =
-                                                valueMapping[newValue]!;
-                                          }
-                                        });
-                                      },
-                                    ),
-                                  ),
-
-                                  SizedBox(
-                                      width: 16
-                                          .w), // Responsive space between the two fields
-
-                                  // Has Spectacles Dropdown
-                                  Expanded(
-                                    child: LabeledDropdown(
-                                      label:
-                                          "Has Spectacles? :  ${getSpecs(childInfo!.hasSpecs)}",
-                                      options: ['YES', 'NO'],
-                                      onChanged: (String? newValue) {
-                                        setState(() {
-                                          if (newValue != null) {
-                                            childInfo?.hasSpecs = newValue;
-                                          }
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ],
+                              LabeledDropdown(
+                                label: 'Transport Mode', // Static label
+                                options: displayOptions, // Dropdown options
+                                selectedValue:
+                                    selectedTrans, // The currently selected transport mode
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    if (newValue != null) {
+                                      selectedTrans =
+                                          newValue; // Update the selected transport mode
+                                      childInfo?.transportMode = valueMapping[
+                                          newValue]!; // Map the selected value to server-side transport mode
+                                    }
+                                  });
+                                },
                               ),
 
+                              LabeledDropdown(
+                                label: 'Has Spectacles?', // Static label
+                                options: ['YES', 'NO'], // Dropdown options
+                                selectedValue: getSpecs(childInfo!
+                                    .hasSpecs), // The currently selected spectacles status
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    if (newValue != null) {
+                                      childInfo?.hasSpecs =
+                                          newValue; // Update the spectacles status
+                                    }
+                                  });
+                                },
+                              ),
                               SizedBox(
-                                height: 10.h,
+                                height: 5,
                               ),
                               ElevatedButton(
                                 onPressed: () async {
