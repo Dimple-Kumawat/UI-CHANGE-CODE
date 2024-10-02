@@ -9,6 +9,11 @@ class ResultPage extends StatefulWidget {
 }
 
 class _ResultPageState extends State<ResultPage> {
+  // Visibility flags for the cards
+  int cbseCardVisible = 0; // 1 means visible, 0 means hidden
+  int viewReportCardVisible = 0; // 1 means visible, 0 means hidden
+  int resultChartVisible = 0; // 1 means visible, 0 means hidden
+
   // Sample static data to populate the design for the expandable list
   List<Map<String, dynamic>> examData = [
     {
@@ -16,8 +21,7 @@ class _ResultPageState extends State<ResultPage> {
       'Details': [
         {
           'Subject': 'English',
-          'Mark_headings':
-              'Periodic Test will be conducted in March ',
+          'Mark_headings': 'Periodic Test will be conducted in March ',
           'Marks_obtained': '25',
           'Highest_marks': '30'
         },
@@ -86,63 +90,55 @@ class _ResultPageState extends State<ResultPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        toolbarHeight: 50.h,
-        title: Text(
-          "Result",
-          style: TextStyle(fontSize: 20.sp, color: Colors.white),
+    bool isAnyCardVisible = cbseCardVisible == 1 || viewReportCardVisible == 1 || resultChartVisible == 1;
+
+    // Outer container with the gradient background
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.pink, Colors.blue],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
         ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
       ),
-      body: Container(
-        height: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.pink, Colors.blue],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+      child: Scaffold(
+        backgroundColor: Colors.transparent, // Make scaffold background transparent to show the gradient
+        appBar: AppBar(
+          toolbarHeight: 50.h,
+          title: Text(
+            "Result",
+            style: TextStyle(fontSize: 20.sp, color: Colors.white),
           ),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
         ),
-        child: Padding(
+        body: Padding(
           padding: const EdgeInsets.all(14.0),
           child: Column(
             children: [
-              // Grid of cards at the top
-              Expanded(
-                flex: 2, // Adjusts the space allocated for the grid
-                child: GridView.count(
+              // Conditional rendering of the grid if at least one card is visible
+              if (isAnyCardVisible)
+                GridView.count(
+                  shrinkWrap: true, // Let the grid take only the space it needs
                   crossAxisCount: 3, // Display 3 cards in each row
                   crossAxisSpacing: 7.w, // Space between columns
                   mainAxisSpacing: 7.h, // Space between rows
                   children: [
-                    _buildCard(
-                        'CBSE Report Card', Icons.school, Colors.deepPurple,
-                        () {
-                      // Handle CBSE Report Card tap
-                    }),
-                    _buildCard('View Report Card', Icons.insert_drive_file,
-                        Colors.teal, () {
-                      // Handle View Report Card tap
-                    }),
-                    _buildCard('Result Chart', Icons.bar_chart, Colors.orange,
-                        () {
-                      // Handle Result Chart tap
-                    }),
+                    if (cbseCardVisible == 1)
+                      _buildCard('CBSE Report Card', Icons.school, Colors.deepPurple, () {
+                        // Handle CBSE Report Card tap
+                      }),
+                    if (viewReportCardVisible == 1)
+                      _buildCard('View Report Card', Icons.insert_drive_file, Colors.teal, () {
+                        // Handle View Report Card tap
+                      }),
+                    if (resultChartVisible == 1)
+                      _buildCard('Result Chart', Icons.bar_chart, Colors.orange, () {
+                        // Handle Result Chart tap
+                      }),
                   ],
                 ),
-              ),
-
-              // Add some spacing and divider
-              Divider(thickness: 2),
-              const SizedBox(height: 7),
-
-              // Expanded list of exam results below the cards
               Expanded(
-                flex: 6, // Adjusts the space allocated for the exam results list
                 child: ListView.builder(
                   padding: EdgeInsets.all(6),
                   itemCount: examData.length,
@@ -150,8 +146,7 @@ class _ResultPageState extends State<ResultPage> {
                     final exam = examData[index];
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 16.0),
-                      child: _buildExpandableCard(
-                          exam['Exam_name'], exam['Details']),
+                      child: _buildExpandableCard(exam['Exam_name'], exam['Details']),
                     );
                   },
                 ),
@@ -164,8 +159,7 @@ class _ResultPageState extends State<ResultPage> {
   }
 
   // Card Builder Function for the top grid
-  Widget _buildCard(
-      String title, IconData icon, Color color, VoidCallback onTap) {
+  Widget _buildCard(String title, IconData icon, Color color, VoidCallback onTap) {
     return FractionallySizedBox(
       widthFactor: 1, // Full width of the grid item
       heightFactor: 0.80, // Reduce the height of the card
@@ -234,52 +228,49 @@ class _ResultPageState extends State<ResultPage> {
   }
 
   // Function to build each result row dynamically for the expandable exam cards
- // Function to build each result row dynamically for the expandable exam cards
-Widget _buildResultRow(String subject, String test, String score) {
-  return Padding(
-    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 14),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        // Subject Column with fixed width
-        SizedBox(
-          width: 80.w, // Fixed width for subject text
-          child: Text(
-            subject,
-            style: TextStyle(color: Color.fromARGB(255, 34, 28, 28)),
-            textAlign: TextAlign.left, // Align text to the left
-            overflow: TextOverflow.ellipsis, // Handle long text
-          ),
-        ),
-        
-        // Mark Headings Column with expanded width
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+  Widget _buildResultRow(String subject, String test, String score) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 14),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          // Subject Column with fixed width
+          SizedBox(
+            width: 80.w, // Fixed width for subject text
             child: Text(
-              test,
-              style: TextStyle(fontWeight: FontWeight.w600),
-              maxLines: 2, // Limit to 2 lines
-              overflow: TextOverflow.ellipsis, // Show '...' if the text exceeds
-              softWrap: true, // Allow wrapping
-              textAlign: TextAlign.center, // Align heading to the center
+              subject,
+              style: TextStyle(color: Color.fromARGB(255, 34, 28, 28)),
+              textAlign: TextAlign.left, // Align text to the left
+              overflow: TextOverflow.ellipsis, // Handle long text
             ),
           ),
-        ),
-        
-        // Marks Column with fixed width
-        SizedBox(
-          width: 50.w, // Fixed width for score text
-          child: Text(
-            score,
-            style: TextStyle(color: Colors.blue),
-            textAlign: TextAlign.right, // Align text to the right
+          
+          // Mark Headings Column with expanded width
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text(
+                test,
+                style: TextStyle(fontWeight: FontWeight.w600),
+                maxLines: 2, // Limit to 2 lines
+                overflow: TextOverflow.ellipsis, // Show '...' if the text exceeds
+                softWrap: true, // Allow wrapping
+                textAlign: TextAlign.center, // Align heading to the center
+              ),
+            ),
           ),
-        ),
-      ],
-    ),
-  );
-}
-
-
+          
+          // Marks Column with fixed width
+          SizedBox(
+            width: 50.w, // Fixed width for score text
+            child: Text(
+              score,
+              style: TextStyle(color: Colors.blue),
+              textAlign: TextAlign.right, // Align text to the right
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:evolvu/Attandance/circleAttandance.dart';
 import 'package:evolvu/Homework/homeWork_notePage.dart';
 import 'package:evolvu/Remark/remark_notePage.dart';
 import 'package:evolvu/login.dart';
@@ -79,8 +80,6 @@ class StudentActivityPage extends StatefulWidget {
 }
 
 class _StudentActivityPageState extends State<StudentActivityPage> {
-
-
   String shortName = "";
   String academic_yr = "";
   String reg_id = "";
@@ -157,26 +156,25 @@ class _StudentActivityPageState extends State<StudentActivityPage> {
 
     http.Response get_student_profile_images_details = await http.post(
       Uri.parse(url + "get_student_profile_images_details"),
-      body: {
-        'student_id': widget.studentId,
-        'short_name': shortName
-      },
+      body: {'student_id': widget.studentId, 'short_name': shortName},
     );
 
     // print('get_student_profile_images_details status code: ${get_student_profile_images_details.statusCode}');
     // print('get_student_profile_images_details Response body====:>  ${get_student_profile_images_details.body}');
 
     if (get_student_profile_images_details.statusCode == 200) {
-      Map<String, dynamic> responseData = json.decode(get_student_profile_images_details.body);
+      Map<String, dynamic> responseData =
+          json.decode(get_student_profile_images_details.body);
       imageUrl = responseData['image_url'];
       print('Image URL: $imageUrl');
-    if (imageUrl.hashCode == 404) {
-      print('Image not found, using default image.');
-      imageUrl = ""; // or set a default image URL if available
-    } else {
-      print('Error fetching image details: ${get_student_profile_images_details.statusCode}');
+      if (imageUrl.hashCode == 404) {
+        print('Image not found, using default image.');
+        imageUrl = ""; // or set a default image URL if available
+      } else {
+        print(
+            'Error fetching image details: ${get_student_profile_images_details.statusCode}');
+      }
     }
-  }
   }
 
   Future<int> fetchUnreadHomeworkCount() async {
@@ -197,7 +195,6 @@ class _StudentActivityPageState extends State<StudentActivityPage> {
         List<dynamic> data = json.decode(response.body);
         unreadCount = int.tryParse(data[0]['unread_homeworks']) ?? 0;
         print('fetching unread remarks count: $unreadCount');
-
       } else {
         print('Failed to fetch unread remarks count: ${response.statusCode}');
       }
@@ -207,8 +204,8 @@ class _StudentActivityPageState extends State<StudentActivityPage> {
 
     return unreadCount;
   }
-  Future<int> fetchUnreadnotices() async {
 
+  Future<int> fetchUnreadnotices() async {
     try {
       final response = await http.post(
         Uri.parse(widget.url + "get_count_of_unread_notices"),
@@ -221,13 +218,12 @@ class _StudentActivityPageState extends State<StudentActivityPage> {
       );
 
       if (response.statusCode == 200) {
-
         List<dynamic> data = json.decode(response.body);
         noticeunreadCount = int.tryParse(data[0]['unread_notices']) ?? 0;
         print('fetching unread noticeunreadCount count: $noticeunreadCount');
-
       } else {
-        print('Failed to fetch unread noticeunreadCount count: ${response.statusCode}');
+        print(
+            'Failed to fetch unread noticeunreadCount count: ${response.statusCode}');
       }
     } catch (e) {
       print('Error fetching unread noticeunreadCount count: $e');
@@ -235,8 +231,8 @@ class _StudentActivityPageState extends State<StudentActivityPage> {
 
     return noticeunreadCount;
   }
-  Future<int> fetchUnreadTechetNotes() async {
 
+  Future<int> fetchUnreadTechetNotes() async {
     try {
       final response = await http.post(
         Uri.parse(widget.url + "get_count_of_unread_notes"),
@@ -249,13 +245,12 @@ class _StudentActivityPageState extends State<StudentActivityPage> {
       );
 
       if (response.statusCode == 200) {
-
         List<dynamic> data = json.decode(response.body);
         TnoteunreadCount = int.tryParse(data[0]['unread_notes']) ?? 0;
         print('fetching unread TnoteunreadCount count: $TnoteunreadCount');
-
       } else {
-        print('Failed to fetch unread TnoteunreadCount count: ${response.statusCode}');
+        print(
+            'Failed to fetch unread TnoteunreadCount count: ${response.statusCode}');
       }
     } catch (e) {
       print('Error fetching unread TnoteunreadCount count: $e');
@@ -263,8 +258,8 @@ class _StudentActivityPageState extends State<StudentActivityPage> {
 
     return TnoteunreadCount;
   }
-  Future<int> fetchUnreadRemark() async {
 
+  Future<int> fetchUnreadRemark() async {
     try {
       final response = await http.post(
         Uri.parse(widget.url + "get_count_of_unread_remarks"),
@@ -277,13 +272,12 @@ class _StudentActivityPageState extends State<StudentActivityPage> {
       );
 
       if (response.statusCode == 200) {
-
         List<dynamic> data = json.decode(response.body);
         ReamrkunreadCount = int.tryParse(data[0]['unread_remarks']) ?? 0;
         print('fetching unread ReamrkunreadCount count: $ReamrkunreadCount');
-
       } else {
-        print('Failed to fetch unread ReamrkunreadCount count: ${response.statusCode}');
+        print(
+            'Failed to fetch unread ReamrkunreadCount count: ${response.statusCode}');
       }
     } catch (e) {
       print('Error fetching unread ReamrkunreadCount count: $e');
@@ -292,20 +286,31 @@ class _StudentActivityPageState extends State<StudentActivityPage> {
     return ReamrkunreadCount;
   }
 
-
   @override
   Widget build(BuildContext context) {
+    final List<String> absentDates = [
+      '2024-08-01',
+      '2024-08-05',
+      '2024-08-09',
+      // Add more dates as needed
+    ];
     final List<CardItem> cardItems = [
       CardItem(
-        imagePath: widget.gender == 'F' ? 'assets/girl.png' : 'assets/boy.png', // Local fallback image
+        imagePath: widget.gender == 'F'
+            ? 'assets/girl.png'
+            : 'assets/boy.png', // Local fallback image
         title: 'Student Profile',
         onTap: (context) {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => StudentProfilePage(studentId: widget.studentId,shortName: shortName,cname: widget.cname,
-                secname: widget.secname,academic_yr: academic_yr
-                ,),
+              builder: (context) => StudentProfilePage(
+                studentId: widget.studentId,
+                shortName: shortName,
+                cname: widget.cname,
+                secname: widget.secname,
+                academic_yr: academic_yr,
+              ),
             ),
           );
         },
@@ -317,11 +322,15 @@ class _StudentActivityPageState extends State<StudentActivityPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => TeacherNotePage(studentId: widget.studentId,shortName: shortName,academic_yr: academic_yr
-                  ,classId: widget.classId,secId:widget.secId),
+              builder: (context) => TeacherNotePage(
+                  studentId: widget.studentId,
+                  shortName: shortName,
+                  academic_yr: academic_yr,
+                  classId: widget.classId,
+                  secId: widget.secId),
             ),
           );
-          },
+        },
         showBadgeTnote: true,
       ),
       CardItem(
@@ -331,11 +340,15 @@ class _StudentActivityPageState extends State<StudentActivityPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => HomeWorkNotePage(studentId: widget.studentId,shortName: shortName,academic_yr: academic_yr
-                  ,classId: widget.classId,secId:widget.secId),
+              builder: (context) => HomeWorkNotePage(
+                  studentId: widget.studentId,
+                  shortName: shortName,
+                  academic_yr: academic_yr,
+                  classId: widget.classId,
+                  secId: widget.secId),
             ),
           );
-          },
+        },
         showBadge: true, // Show badge on this card
       ),
 
@@ -346,11 +359,15 @@ class _StudentActivityPageState extends State<StudentActivityPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => RemarkNotePage(studentId: widget.studentId,shortName: shortName,academic_yr: academic_yr
-                  ,classId: widget.classId,secId:widget.secId),
+              builder: (context) => RemarkNotePage(
+                  studentId: widget.studentId,
+                  shortName: shortName,
+                  academic_yr: academic_yr,
+                  classId: widget.classId,
+                  secId: widget.secId),
             ),
           );
-          },
+        },
         showBadgeRemark: true,
       ),
       CardItem(
@@ -360,27 +377,28 @@ class _StudentActivityPageState extends State<StudentActivityPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => NoticeNotePage(studentId: widget.studentId,shortName: shortName,academic_yr: academic_yr
-                  ,classId: widget.classId,secId:widget.secId),
+              builder: (context) => NoticeNotePage(
+                  studentId: widget.studentId,
+                  shortName: shortName,
+                  academic_yr: academic_yr,
+                  classId: widget.classId,
+                  secId: widget.secId),
             ),
           );
-          },
+        },
         showBadgenotice: true,
       ),
 
       CardItem(
         imagePath: 'assets/calendar.png',
         title: 'Exam/TimeTable',
-
         onTap: (context) {
           showDialog(
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
                 scrollable: true,
-
-                content:
-                Column(
+                content: Column(
                   children: [
                     GestureDetector(
                       onTap: () {
@@ -388,87 +406,138 @@ class _StudentActivityPageState extends State<StudentActivityPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => TimeTablePage(studentId: widget.studentId,shortName: shortName,academic_yr: academic_yr
-                                ,classId: widget.classId,secId:widget.secId, className: widget.className),
+                            builder: (context) => TimeTablePage(
+                                studentId: widget.studentId,
+                                shortName: shortName,
+                                academic_yr: academic_yr,
+                                classId: widget.classId,
+                                secId: widget.secId,
+                                className: widget.className),
                           ),
                         );
                       },
                       child: Row(
                         children: [
-                          Image.asset( 'assets/calendar.png',),
-
+                          Image.asset(
+                            'assets/calendar.png',
+                          ),
                           const Padding(
                             padding: EdgeInsets.all(12.0),
                             child: Text("TimeTable"),
                           )
-
                         ],
                       ),
                     ),
-
-                    const SizedBox(height: 15,),
+                    const SizedBox(
+                      height: 15,
+                    ),
                     GestureDetector(
                       onTap: () {
-
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ExamTimeTablePage(studentId: widget.studentId,shortName: shortName,academic_yr: academic_yr
-                                  ,classId: widget.classId,secId:widget.secId, className: widget.className,),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ExamTimeTablePage(
+                              studentId: widget.studentId,
+                              shortName: shortName,
+                              academic_yr: academic_yr,
+                              classId: widget.classId,
+                              secId: widget.secId,
+                              className: widget.className,
                             ),
-                          );
+                          ),
+                        );
                       },
                       child: Row(
                         children: [
                           SizedBox(
                               height: 50,
                               child: Image.asset('assets/examt.webp')),
-
                           const Padding(
                             padding: EdgeInsets.all(12.0),
                             child: Text("ExamTimeTable"),
                           )
-
                         ],
                       ),
                     ),
-
-
                   ],
                 ),
-
               );
             },
           );
         },
-
       ),
-        CardItem(
+    
+    
+    
+    
+    
+    
+      CardItem(
         imagePath: 'assets/notice.png',
         title: 'Result',
-         
-       onTap: (context) {
+        onTap: (context) {
           Navigator.push(
-              context,
-          MaterialPageRoute(
-           builder: (context) => ResultPage(),
-          //   builder: (context) => ExamResult(),
-          ),
+            context,
+            MaterialPageRoute(
+              builder: (context) => ResultPage(),
+              //   builder: (context) => ExamResult(),
+            ),
           );
         },
       ),
 
+      CardItem(
+        imagePath: '',
+        title: 'Attendance',
+        onTap: (BuildContext context) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Absent Dates'),
+                content: SizedBox(
+                  height: 200.h,
+                  width: 300.w,
+                  child: ListView.builder(
+                    itemCount: absentDates.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ListTile(
+                        title: Text(
+                          absentDates[index],
+                          style: TextStyle(fontSize: 16.sp),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Close the dialog
+                    },
+                    child: const Text('Close'),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+      ),
 
       CardItem(
         imagePath: 'assets/smartchat.png',
         title: 'Smart Chat',
         onTap: (context) {
           Navigator.push(
-              context,
-          MaterialPageRoute(
-            builder: (context) => WebViewPage(studentId: widget.studentId,shortName: shortName,academicYr: academic_yr
-                ,classId: widget.classId,secId:widget.secId),
-          ),
+            context,
+            MaterialPageRoute(
+              builder: (context) => WebViewPage(
+                  studentId: widget.studentId,
+                  shortName: shortName,
+                  academicYr: academic_yr,
+                  classId: widget.classId,
+                  secId: widget.secId),
+            ),
           );
         },
       ),
@@ -481,7 +550,7 @@ class _StudentActivityPageState extends State<StudentActivityPage> {
       // ),
     ];
 
-    return FutureBuilder(
+      return FutureBuilder(
       future: _getSchoolInfo(),
       builder: (context, snapshot) {
         return Scaffold(
@@ -528,17 +597,23 @@ class _StudentActivityPageState extends State<StudentActivityPage> {
                                     dimension: 60.w,
                                     child: imageUrl.isNotEmpty
                                         ? Image.network(
-                                      imageUrl + '?timestamp=${DateTime.now().millisecondsSinceEpoch}',
-                                      height: 60,
-                                      errorBuilder: (context, error, stackTrace) {
-                                        return Image.asset(
-                                          widget.gender == 'M' ? 'assets/boy.png' : 'assets/girl.png',
-                                        );
-                                      },
-                                    )
+                                            imageUrl +
+                                                '?timestamp=${DateTime.now().millisecondsSinceEpoch}',
+                                            height: 60,
+                                            errorBuilder:
+                                                (context, error, stackTrace) {
+                                              return Image.asset(
+                                                widget.gender == 'M'
+                                                    ? 'assets/boy.png'
+                                                    : 'assets/girl.png',
+                                              );
+                                            },
+                                          )
                                         : Image.asset(
-                                      widget.gender == 'M' ? 'assets/boy.png' : 'assets/girl.png',
-                                    ),
+                                            widget.gender == 'M'
+                                                ? 'assets/boy.png'
+                                                : 'assets/girl.png',
+                                          ),
                                   ),
                                 ),
                                 Expanded(
@@ -546,15 +621,20 @@ class _StudentActivityPageState extends State<StudentActivityPage> {
                                   child: Padding(
                                     padding: const EdgeInsets.only(left: 8.0),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           widget.firstName,
-                                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.sp),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 14.sp),
                                         ),
                                         Text(
                                           "RollNo: ${widget.rollNo}",
-                                          style: TextStyle(fontSize: 10.sp, color: Colors.red),
+                                          style: TextStyle(
+                                              fontSize: 10.sp,
+                                              color: Colors.red),
                                         ),
                                       ],
                                     ),
@@ -577,11 +657,13 @@ class _StudentActivityPageState extends State<StudentActivityPage> {
                                     children: [
                                       Text(
                                         "Class",
-                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
                                       ),
                                       Text(
                                         widget.className,
-                                        style: TextStyle(fontSize: 10.sp, color: Colors.red),
+                                        style: TextStyle(
+                                            fontSize: 10.sp, color: Colors.red),
                                       ),
                                     ],
                                   ),
@@ -591,17 +673,20 @@ class _StudentActivityPageState extends State<StudentActivityPage> {
                                   flex: 3,
                                   child: Padding(
                                     padding: EdgeInsets.only(left: 25),
-                                   // padding: const EdgeInsets.all(13.0),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         const Text(
                                           "Teacher",
-                                          style: TextStyle(fontWeight: FontWeight.bold),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
                                         ),
                                         Text(
                                           widget.classTeacher,
-                                          style: TextStyle(fontSize: 10.sp, color: Colors.red),
+                                          style: TextStyle(
+                                              fontSize: 10.sp,
+                                              color: Colors.red),
                                         ),
                                       ],
                                     ),
@@ -622,40 +707,47 @@ class _StudentActivityPageState extends State<StudentActivityPage> {
                       ),
                       GridView.count(
                         physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
+                        shrinkWrap: true, // Ensure the GridView takes up only necessary space
                         crossAxisCount: 3,
                         crossAxisSpacing: 2.0,
                         mainAxisSpacing: 1.2,
-                        padding: const EdgeInsets.only(top: 10,left: 20,right: 30),
+                        padding:
+                            const EdgeInsets.only(top: 10, left: 20, right: 30),
                         children: List.generate(cardItems.length, (index) {
                           final item = cardItems[index];
                           return Card(
                             color: Colors.white,
-                              child: Stack(
+                            child: Stack(
                               alignment: Alignment.center,
                               children: [
-                              InkWell(
-                                onTap: () => item.onTap(context),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      item.imagePath,
-                                      height: 60,
-                                    ),
-                                    SizedBox(height: 5),
-                                    Text(
-                                      item.title,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 12.sp,
+                                InkWell(
+                                  onTap: () => item.onTap(context),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      if (item.title == 'Attendance')
+                                        const CircularAttendanceIndicator(
+                                          percentage:
+                                              0.87, // Example: 87% attendance
+                                        )
+                                      else
+                                        Image.asset(
+                                          item.imagePath,
+                                          height: 70.h,
+                                        ),
+                                      SizedBox(height: 8.h),
+                                      Text(
+                                        item.title,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 12.sp,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                                if (item.showBadge) // Conditionally show the badge
-                                if (unreadCount != 0) // Conditionally show the badge
+                                // Conditionally show the badges if there are unread items
+                                if (item.showBadge && unreadCount != 0)
                                   Positioned(
                                     top: 1,
                                     right: 6,
@@ -672,61 +764,9 @@ class _StudentActivityPageState extends State<StudentActivityPage> {
                                       ),
                                     ),
                                   ),
-                                if (item.showBadgenotice)
-                                  if (noticeunreadCount != 0)// Conditionally show the badge
-                                  Positioned(
-                                    top: 1,
-                                    right: 6,
-                                    child: CircleAvatar(
-                                      radius: 10,
-                                      backgroundColor: Colors.red,
-                                      child: Text(
-                                        '$noticeunreadCount',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                if (item.showBadgeTnote)
-                                  if (TnoteunreadCount != 0)// Conditionally show the badge
-                                  Positioned(
-                                    top: 1,
-                                    right: 6,
-                                    child: CircleAvatar(
-                                      radius: 10,
-                                      backgroundColor: Colors.red,
-                                      child: Text(
-                                        '$TnoteunreadCount',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                  ), if (item.showBadgeRemark)
-                                  if (ReamrkunreadCount != 0)// Conditionally show the badge
-                                  Positioned(
-                                    top: 1,
-                                    right: 6,
-                                    child: CircleAvatar(
-                                      radius: 10,
-                                      backgroundColor: Colors.red,
-                                      child: Text(
-                                        '$ReamrkunreadCount',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                            ],
-                              ),
+                                // Add similar logic for other badges...
+                              ],
+                            ),
                           );
                         }),
                       ),
@@ -736,96 +776,78 @@ class _StudentActivityPageState extends State<StudentActivityPage> {
               ),
             ],
           ),
-          // bottomNavigationBar: BottomNavigationBar(
-          //   items: const <BottomNavigationBarItem>[
-          //     BottomNavigationBarItem(
-          //       icon: Icon(Icons.dashboard),
-          //       label: 'Dashboard',
-          //     ),
-          //     BottomNavigationBarItem(
-          //       icon: Icon(Icons.calendar_today),
-          //       label: 'Calendar',
-          //     ),
-          //     BottomNavigationBarItem(
-          //       icon: Icon(Icons.person),
-          //       label: 'Profile',
-          //     ),
-          //   ],
-          // ),
           bottomNavigationBar: buildMyNavBar(context),
         );
       },
-
-
     );
   }
+
+ 
+ 
+  
 }
+
 Container buildMyNavBar(BuildContext context) {
   return Container(
-      height: 80.h,
-      decoration: const BoxDecoration(
-        color: Colors.blue,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
-                enableFeedback: true,
-                onPressed: () {
-                  Navigator.of(context).pop(0);
-                },
-                icon: const Icon(
-                  Icons.dashboard,
-                  color: Colors.white,
-
-                  size: 30,
-                ),
+    height: 80.h,
+    decoration: const BoxDecoration(
+      color: Colors.blue,
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              enableFeedback: true,
+              onPressed: () {
+                Navigator.of(context).pop(0);
+              },
+              icon: const Icon(
+                Icons.dashboard,
+                color: Colors.white,
+                size: 30,
               ),
-              Text('Dashboard', style: TextStyle(color: Colors.white)),
-            ],
-          ),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
-                enableFeedback: false,
-                onPressed: () {
-                  Navigator.of(context).pop(1);
-
-                },
-                icon: const Icon(
-                  Icons.calendar_month,
-                  color: Colors.white,
-
-                  size: 30,
-                ),
+            ),
+            Text('Dashboard', style: TextStyle(color: Colors.white)),
+          ],
+        ),
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              enableFeedback: false,
+              onPressed: () {
+                Navigator.of(context).pop(1);
+              },
+              icon: const Icon(
+                Icons.calendar_month,
+                color: Colors.white,
+                size: 30,
               ),
-              const Text('Calendar', style: TextStyle(color: Colors.white)),
-            ],
-          ),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
-                enableFeedback: false,
-                onPressed: () {
-                  Navigator.of(context).pop(2);
-
-                },
-                icon: const Icon(
-                  Icons.person,
-                  color: Colors.white,
-
-                  size: 30,
-                ),
+            ),
+            const Text('Calendar', style: TextStyle(color: Colors.white)),
+          ],
+        ),
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              enableFeedback: false,
+              onPressed: () {
+                Navigator.of(context).pop(2);
+              },
+              icon: const Icon(
+                Icons.person,
+                color: Colors.white,
+                size: 30,
               ),
-              Text('Profile', style: TextStyle(color: Colors.white)),
-            ],
-          ),
-        ],
-      ),
-      );
-      }
+            ),
+            Text('Profile', style: TextStyle(color: Colors.white)),
+          ],
+        ),
+      ],
+    ),
+  );
+}

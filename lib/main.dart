@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'Utils&Config/all_routs.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MediaQuery(
           data: MediaQuery.of(context)
-              .copyWith(textScaler: TextScaler.linear(1.0)),
+              .copyWith(textScaler: const TextScaler.linear(1.0)),
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             onGenerateRoute: RouterConfigs.onGenerateRoutes,
@@ -33,8 +33,8 @@ class MyApp extends StatelessWidget {
                   end: Alignment.bottomCenter,
                 ),
               ),
-           // child:  ResultPage(),
-            child: UserNamePage(),
+              // child:  ResultPage(),
+              child: UserNamePage(),
             ),
           ),
         );

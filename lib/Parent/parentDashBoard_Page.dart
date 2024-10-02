@@ -16,7 +16,7 @@ import '../changePasswordPage.dart';
 class ParentDashBoardPage extends StatefulWidget {
   final String academic_yr;
   final String shortName;
-   ParentDashBoardPage({required this.academic_yr,required this.shortName});
+  ParentDashBoardPage({required this.academic_yr, required this.shortName});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -76,7 +76,6 @@ class _ParentDashBoardPageState extends State<ParentDashBoardPage> {
   void initState() {
     super.initState();
     _getSchoolInfo();
-
   }
 
   @override
@@ -169,13 +168,13 @@ class _ParentDashBoardPageState extends State<ParentDashBoardPage> {
               ],
             ),
             Column(
-              //mainAxisSize: MainAxisSize.min,
               children: [
                 IconButton(
                   enableFeedback: false,
                   onPressed: () {
                     setState(() {
-                      pageIndex = 1;
+                      pageIndex =
+                          1; // This is just a flag for controlling calendar display
                     });
                   },
                   icon: Icon(
@@ -186,7 +185,27 @@ class _ParentDashBoardPageState extends State<ParentDashBoardPage> {
                     size: 30,
                   ),
                 ),
-                Text('Evants', style: TextStyle(color: Colors.white)),
+                Text('Events', style: TextStyle(color: Colors.white)),
+
+                // Add CalendarDatePicker when pageIndex == 1
+                if (pageIndex == 1)
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    child: CalendarDatePicker(
+                      initialDate: DateTime
+                          .now(), // Set today's date as the initial value
+                      firstDate:
+                          DateTime(2000), // Define the first selectable date
+                      lastDate:
+                          DateTime(2100), // Define the last selectable date
+                      onDateChanged: (DateTime newDate) {
+                        setState(() {
+                          // Handle the selected date here, for example store it or display it
+                          print(newDate); // Replace with your logic
+                        });
+                      },
+                    ),
+                  ),
               ],
             ),
             Column(
@@ -246,7 +265,7 @@ Future<void> showLogoutConfirmationDialog(BuildContext context) async {
             child: ListBody(
               children: <Widget>[
                 Text('Do you want to logout?',
-              style: TextStyle(fontSize: 16.sp,color: Colors.grey)),
+                    style: TextStyle(fontSize: 16.sp, color: Colors.grey)),
               ],
             ),
           ),
@@ -311,7 +330,9 @@ class CustomPopup extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => AboutUsPage(academic_yr:academic_yr,shortName: shortName)),
+            MaterialPageRoute(
+                builder: (_) => AboutUsPage(
+                    academic_yr: academic_yr, shortName: shortName)),
           );
         },
       ),
@@ -321,7 +342,13 @@ class CustomPopup extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => ChangePasswordPage(academicYear:academic_yr,shortName: shortName, userID: user_id, url: url,)),
+            MaterialPageRoute(
+                builder: (_) => ChangePasswordPage(
+                      academicYear: academic_yr,
+                      shortName: shortName,
+                      userID: user_id,
+                      url: url,
+                    )),
           );
         },
       ),

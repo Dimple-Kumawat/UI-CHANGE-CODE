@@ -179,6 +179,9 @@ class Period {
   }
 }
 
+
+
+
 class PeriodRow extends StatelessWidget {
   final Period period;
 
@@ -192,33 +195,39 @@ class PeriodRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Icon(
                 period.isStudyLeave ? Icons.book : Icons.school,
                 color: period.isStudyLeave ? Colors.red : Colors.black,
               ),
               SizedBox(width: 8),
-              Text(
-                period.subject,
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.bold,
-                  color: period.isStudyLeave ? Colors.red : Colors.black,
+              // Set a fixed width for the subject and allow wrapping
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: 150, // Set a fixed width for the subject
+                ),
+                child: Text(
+                  period.subject,
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.bold,
+                    color: period.isStudyLeave ? Colors.red : Colors.black,
+                  ),
+                  maxLines: 5, // Allow text to wrap to the next line if necessary
+                  overflow: TextOverflow.visible, // Ensure proper text wrapping
                 ),
               ),
             ],
           ),
-          Row(
-            children: [
-              Text(
-                period.date,
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  color: period.isStudyLeave ? Colors.red : Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
+          // Keep the date on the right side, unaffected by the subject wrapping
+          Text(
+            period.date,
+            style: TextStyle(
+              fontSize: 14.sp,
+              color: period.isStudyLeave ? Colors.red : Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ],
       ),
